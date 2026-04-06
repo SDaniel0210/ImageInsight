@@ -1,0 +1,17 @@
+# Virtual env
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
+
+# Model files
+pretrained/
+*.pth
+
+# Cache
+.cache/
