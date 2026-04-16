@@ -15,3 +15,24 @@ pretrained/
 
 # Cache
 .cache/
+
+# Build directories
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userprefs
+*.binlog
+project.assets.json
+
+# Test and Publish
+TestResults/
+publish/
+app.publish/
+
+# OS files
+.DS_Store
+Thumbs.db

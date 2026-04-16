@@ -1,0 +1,104 @@
+﻿<Page x:Class="ImageInsight.DatabasePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ImageInsight"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DatabasePage"
+      Background="#444">
+
+    <Grid Margin="20" Background="#444">
+        <DataGrid x:Name="ImagesDataGrid"
+                  MouseDoubleClick="PopUpImage"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  HeadersVisibility="Column"
+                  IsReadOnly="True"
+                  Background="#444"
+                  Foreground="White"
+                  RowBackground="#555"
+                  AlternatingRowBackground="#666"
+                  BorderBrush="Transparent"
+                  BorderThickness="0"
+                  GridLinesVisibility="None"
+                  ColumnHeaderHeight="35"
+                  RowHeight="32">
+
+            <DataGrid.Columns>
+
+                <!-- File Name -->
+                <DataGridTextColumn Header="File Name"
+                                    Binding="{Binding FileName}"
+                                    Width="1*"/>
+
+                <!-- URL -->
+                <DataGridTextColumn Header="URL"
+                                    Binding="{Binding Url}"
+                                    Width="3*"/>
+
+                <!-- Tags -->
+                <DataGridTextColumn Header="Tags"
+                                    Binding="{Binding Tags}"
+                                    Width="2*"/>
+
+            </DataGrid.Columns>
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="#ccc" />
+                            <Setter Property="Foreground" Value="#111" />
+                            <Setter Property="BorderBrush" Value="#ccc" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#333"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="#444"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="18"/>
+                </Style>
+            </DataGrid.Resources>
+
+        </DataGrid>
+
+        <Grid x:Name="ImagePopup"
+      Background="#AA000000"
+      Visibility="Collapsed">
+
+            <Border Background="#222"
+            Padding="20"
+            CornerRadius="8"
+            Width="800"
+            Height="600"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+                <StackPanel>
+                    <Image x:Name="PopupImage"
+                   Stretch="Uniform"
+                   Height="500"/>
+
+                    <Button Content="Close"
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Center"
+                    Width="100"
+                            Padding="10"
+                            FontSize="15"
+                    Click="ClosePopup"/>
+                </StackPanel>
+
+            </Border>
+        </Grid>
+
+    </Grid>
+</Page>
