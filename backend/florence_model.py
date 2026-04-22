@@ -29,7 +29,7 @@ print("[Florence] Model loaded successfully")
 
 def generate_caption(image_path: str) -> str:
     image = Image.open(image_path).convert("RGB")
-    prompt = "<CAPTION>"
+    prompt = "<MORE_DETAILED_CAPTION>"
 
     inputs = processor(
         text=prompt,
@@ -42,7 +42,7 @@ def generate_caption(image_path: str) -> str:
     with torch.no_grad():
         generated_ids = model.generate(
             **inputs,
-            max_new_tokens=64,
+            max_new_tokens=200,
             num_beams=3
         )
 
