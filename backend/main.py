@@ -5,8 +5,6 @@ from backend.llm import generate_caption_tags
 from backend.florence_model import generate_caption
 from backend.rampp_model import generate_ram_tags
 
-print("🔥 MAIN.PY ELINDULT")
-
 app = FastAPI()
 
 

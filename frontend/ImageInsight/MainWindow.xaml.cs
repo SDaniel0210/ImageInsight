@@ -26,8 +26,7 @@ namespace ImageInsight
             InitializeComponent();
 
             _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
-
-            MainFrame.Navigate(new HomePage());
+            MainFrame.Navigate(new HomePage(_currentUser));
 
             ApplyPermissions();
         }
@@ -59,7 +58,7 @@ namespace ImageInsight
 
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new HomePage());
+            MainFrame.Navigate(new HomePage(_currentUser));
         }
 
         private void Images_Click(object sender, RoutedEventArgs e)

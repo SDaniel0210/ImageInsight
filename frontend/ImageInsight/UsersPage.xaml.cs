@@ -20,6 +20,12 @@ namespace ImageInsight
             InitializeComponent();
             _currentUser = currentUser;
 
+            if (!IsAdmin)
+            {
+                UsersDataGrid.IsReadOnly = true;
+                UsersDataGrid.ContextMenu = null;
+            }
+
             Loaded += async (_, _) => await LoadUsersAsync();
         }
 
@@ -78,6 +84,11 @@ namespace ImageInsight
 
         private async void AddUser_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsAdmin)
+            {
+                MessageBox.Show("Access denied.");
+                return;
+            }
             var window = new UserEditWindow(null);
             bool? result = window.ShowDialog();
 
@@ -89,6 +100,11 @@ namespace ImageInsight
         {
             if (UsersDataGrid.SelectedItem is not UserDisplayModel selectedUser)
                 return;
+            if (!IsAdmin)
+            {
+                MessageBox.Show("Access denied.");
+                return;
+            }
 
             var window = new UserEditWindow(selectedUser.Id);
             bool? result = window.ShowDialog();
@@ -101,7 +117,11 @@ namespace ImageInsight
         {
             if (UsersDataGrid.SelectedItem is not UserDisplayModel selectedUser)
                 return;
-
+            if (!IsAdmin)
+            {
+                MessageBox.Show("Access denied.");
+                return;
+            }
             if (selectedUser.Id == _currentUser.Id)
             {
                 MessageBox.Show("You cannot delete your own user.");

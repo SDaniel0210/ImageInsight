@@ -39,6 +39,7 @@
 
                 <Button x:Name="HomeButton"
                         Content="Home"
+                        Click="Home_Click"
                         Background="#00DDDDDD"
                         Foreground="White"
                         BorderBrush="#00707070"
@@ -47,6 +48,7 @@
 
                 <Button x:Name="ImagesButton"
                         Content="Images"
+                        Click="Images_Click"
                         Background="#00DDDDDD"
                         Foreground="White"
                         BorderBrush="#00707070"
@@ -64,6 +66,7 @@
 
                 <Button x:Name="SettingsButton"
                         Content="Settings"
+                        Click="Settings_Click"
                         Background="#00DDDDDD"
                         Foreground="White"
                         BorderBrush="#00707070"
