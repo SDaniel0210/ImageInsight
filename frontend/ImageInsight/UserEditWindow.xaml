@@ -1,0 +1,48 @@
+﻿<Window x:Class="ImageInsight.UserEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="User editor"
+        Height="310"
+        Width="360"
+        WindowStartupLocation="CenterScreen">
+
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Username"/>
+        <TextBox x:Name="UsernameTextBox"
+                 Height="28"
+                 Margin="0,0,0,10"/>
+
+        <TextBlock Text="Role"/>
+        <ComboBox x:Name="RoleComboBox"
+                  Height="28"
+                  Margin="0,0,0,10">
+            <ComboBoxItem Content="Admin"/>
+            <ComboBoxItem Content="User"/>
+        </ComboBox>
+
+        <TextBlock Text="Password"/>
+        <PasswordBox x:Name="PasswordBox"
+                     Height="28"
+                     Margin="0,0,0,15"/>
+
+        <TextBlock Text="Leave password empty when editing if you do not want to change it."
+                   FontSize="11"
+                   Foreground="Gray"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,15"/>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Save"
+                    Width="80"
+                    Margin="0,0,10,0"
+                    Click="Save_Click"/>
+
+            <Button Content="Cancel"
+                    Width="80"
+                    Click="Cancel_Click"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

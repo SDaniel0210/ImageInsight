@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageInsight"
         mc:Ignorable="d"
-        Title="ImageInsight" Height="768" Width="1280" MinHeight="765" MinWidth="1280"
+        Title="ImageInsight"
+        Height="768"
+        Width="1280"
+        MinHeight="765"
+        MinWidth="1280"
         WindowStyle="None"
         AllowsTransparency="False">
 
@@ -16,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <!-- Navigation Bar -->
-        <Grid Background="#222" Grid.Row="0" MouseDown="TitleBar_MouseDown">
+        <Grid Background="#222" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -24,160 +28,192 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="ImageInsight" Foreground="White" Margin="10,10,50,10"/>
+            <TextBlock Text="ImageInsight"
+                       Foreground="White"
+                       Margin="10,10,50,10"/>
 
             <!-- Navigation buttons -->
-            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left">
-                <Button x:Name="HomeButton" Content="Home" Click="GoToHomePage" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Padding="10,1,10,1" Margin="0,0,1,0"/>
-                <Button x:Name="ImagesButton" Content="Images" Click="GoToImagesPage" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Padding="10,1,10,1" Margin="0,0,1,0"/>
-                <Button x:Name="SettingsButton"  Content="Settings" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Panel.ZIndex="4" Padding="10,1,10,1" Margin="0,0,1,0"/>
-                
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left">
+
+                <Button x:Name="HomeButton"
+                        Content="Home"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"/>
+
+                <Button x:Name="ImagesButton"
+                        Content="Images"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"/>
+
+                <Button x:Name="UsersButton"
+                        Content="Users"
+                        Click="Users_Click"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"/>
+
+                <Button x:Name="SettingsButton"
+                        Content="Settings"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"/>
             </StackPanel>
 
-            <!-- Image buttons -->
-            <StackPanel Orientation="Horizontal" Grid.Column="2">
-                <Button x:Name="AnalyzeButton" Content="Analyze" Click="AnalyzeImage" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Panel.ZIndex="4" Padding="10,1,10,1" Margin="0,0,1,0" Visibility="Collapsed"/>
-                <Button x:Name="UploadButton" Content="Upload new" Click="UploadImage" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Panel.ZIndex="4" Padding="10,1,10,1" Margin="0,0,1,0" Visibility="Collapsed"/>
-                <Button x:Name="DeleteImageButton" Content="Delete" Click="DeleteImage" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Panel.ZIndex="4" Padding="10,1,10,1" Margin="0,0,1,0" Visibility="Collapsed"/>
+            <!-- Page-specific action buttons -->
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="2">
+
+                <Button x:Name="AnalyzeButton"
+                        Content="Analyze"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"
+                        Visibility="Collapsed"/>
+
+                <Button x:Name="UploadButton"
+                        Content="Upload new"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"
+                        Visibility="Collapsed"/>
+
+                <Button x:Name="DeleteImageButton"
+                        Content="Delete"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Padding="10,1,10,1"
+                        Margin="0,0,1,0"
+                        Visibility="Collapsed"/>
             </StackPanel>
 
             <!-- Window buttons -->
-            <StackPanel Orientation="Horizontal" Grid.Column="3">
-                <Button Content="—" Width="40" Background="#00000000" Foreground="White" BorderBrush="#00707070" Click="MinimizeWindow"/>
-                <Button Content="▢" Width="40" Foreground="White" Background="#00DDDDDD" BorderBrush="#00707070" Click="ToggleMaximizeRestore"/>
-                <Button Content="⨉" Width="40" Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Click="CloseApp"/>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="3">
+
+                <Button Content="—"
+                        Width="40"
+                        Background="#00000000"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Click="MinimizeWindow"/>
+
+                <Button Content="▢"
+                        Width="40"
+                        Foreground="White"
+                        Background="#00DDDDDD"
+                        BorderBrush="#00707070"
+                        Click=" ToggleMaximizeRestore"/>
+
+                <Button Content="⨉"
+                        Width="40"
+                        Background="#00DDDDDD"
+                        Foreground="White"
+                        BorderBrush="#00707070"
+                        Click="CloseApp"/>
             </StackPanel>
         </Grid>
 
-        <!-- Image -->
-        <Grid x:Name="ImageGrid" Grid.Row="1">
-            <Border Background="#444"
-            AllowDrop="True"
-            Drop="ImageDrop"
-            DragOver="ImageDragOver">
-
-                <Grid>
-                    <!-- The actual image -->
-                    <Image x:Name="DisplayedImage"
-                   Stretch="Uniform"
-                   Visibility="Collapsed"/>
-
-                    <!-- Placeholder shown when no image -->
-                    <Border x:Name="PlaceholderPanel"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Opacity="0.6"
-                            Background="#333"
-                            CornerRadius="20"
-                            Padding="10, 5, 10, 5"
-                            MouseLeftButtonDown="UploadImage"
-                            Cursor="Hand">
-                        <StackPanel>
-                            <TextBlock Text="Drag and Drop an image here"
-                                       Foreground="White"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center"/>
-                            <TextBlock Text="or click to Upload"
-                                       Foreground="Gray"
-                                       FontSize="16"
-                                       HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-            </Border>
-        </Grid>
+        <!-- Main content -->
+        <Frame x:Name="MainFrame"
+               Grid.Row="1"
+               NavigationUIVisibility="Hidden"/>
 
         <!-- Loading screen -->
-        <Grid x:Name="LoadingOverlay" Grid.Row="1"
-          Visibility="Collapsed"
-          Background="#CD000000"
-          Panel.ZIndex="999">
+        <Grid x:Name="LoadingOverlay"
+              Grid.Row="1"
+              Visibility="Collapsed"
+              Background="#CD000000"
+              Panel.ZIndex="999">
 
             <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                        VerticalAlignment="Center">
 
                 <TextBlock Text="Analyzing..."
-               Foreground="White"
-               FontSize="25"/>
-                
-                <ProgressBar IsIndeterminate="True"
-                         Width="200"
-                         Height="15"
-                         Foreground="DodgerBlue"/>
-            </StackPanel>
+                           Foreground="White"
+                           FontSize="25"/>
 
+                <ProgressBar IsIndeterminate="True"
+                             Width="200"
+                             Height="15"
+                             Foreground="DodgerBlue"/>
+            </StackPanel>
         </Grid>
 
         <!-- Result Popup -->
-        <Grid x:Name="ResultPopup" Grid.Row="1"
-      Background="#CD000000"
-      Visibility="Collapsed"
-      Panel.ZIndex="1000">
+        <Grid x:Name="ResultPopup"
+              Grid.Row="1"
+              Background="#CD000000"
+              Visibility="Collapsed"
+              Panel.ZIndex="1000">
 
             <Border Background="#222"
-            Padding="20"
-            CornerRadius="10"
-            Width="1100"
-            Height="700"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+                    Padding="20"
+                    CornerRadius="10"
+                    Width="1100"
+                    Height="700"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
 
-                <!-- MINDEN tartalom scrollozható -->
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-
                     <StackPanel>
 
                         <Image x:Name="AnalyzedImage"
-                       Stretch="Uniform"
-                       Height="550"/>
+                               Stretch="Uniform"
+                               Height="550"/>
 
                         <TextBlock x:Name="ResultDescription"
-                           Text="Description"
-                           Foreground="White"
-                           FontSize="16"
-                           TextWrapping="Wrap"
-                           Padding="0,15,0,15"/>
+                                   Text="Description"
+                                   Foreground="White"
+                                   FontSize="16"
+                                   TextWrapping="Wrap"
+                                   Padding="0,15,0,15"/>
 
                         <TextBlock x:Name="ResultTags"
-                           Text="Tags: ..."
-                           Foreground="#00AEEF"
-                           FontSize="16"
-                           FontWeight="Bold"
-                           Padding="0,15,0,15"/>
+                                   Text="Tags: ..."
+                                   Foreground="#00AEEF"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   TextWrapping="Wrap"
+                                   Padding="0,15,0,15"/>
 
                         <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"
-                            Margin="0,20,0,0">
+                                    HorizontalAlignment="Center"
+                                    Margin="0,20,0,0">
 
                             <Button Content="Validate"
-                            Width="100"
-                            FontSize="15"
-                            Click="ValidateResult" />
+                                    Width="100"
+                                    FontSize="15"/>
 
                             <Button Content="Revalidate"
-                            Width="100"
-                            FontSize="15"
-                            Margin="20,0"
-                            Click="AnalyzeImage" />
+                                    Width="100"
+                                    FontSize="15"
+                                    Margin="20,0"/>
 
                             <Button Content="Reject"
-                            Width="100"
-                            FontSize="15"
-                            Click="RejectResult" />
+                                    Width="100"
+                                    FontSize="15"/>
                         </StackPanel>
 
                     </StackPanel>
-
                 </ScrollViewer>
-
             </Border>
         </Grid>
-
-
-
-        <!-- Main view -->
-        <Frame x:Name="MainFrame" Grid.Row="1" />
     </Grid>
-
 </Window>
