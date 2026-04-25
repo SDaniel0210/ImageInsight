@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ImageInsight.Data;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,6 +22,11 @@ namespace ImageInsight
         public MainWindow()
         {
             InitializeComponent();
+            using var db = new ImageInsightDbContext();
+
+            var userCount = db.Users.Count();
+
+            MessageBox.Show($"DB connection OK. Users: {userCount}");
             MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
         }
 

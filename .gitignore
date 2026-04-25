@@ -36,3 +36,8 @@ app.publish/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Entity Developer
+*.edps
+*.efml
+*.view
