@@ -89,7 +89,7 @@ namespace ImageInsight
                 MessageBox.Show("Access denied.");
                 return;
             }
-            var window = new UserEditWindow(null);
+            var window = new UserEditWindow(_currentUser.Id, _currentUser);
             bool? result = window.ShowDialog();
 
             if (result == true)
@@ -106,7 +106,7 @@ namespace ImageInsight
                 return;
             }
 
-            var window = new UserEditWindow(selectedUser.Id);
+            var window = new UserEditWindow(_currentUser.Id, _currentUser);
             bool? result = window.ShowDialog();
 
             if (result == true)

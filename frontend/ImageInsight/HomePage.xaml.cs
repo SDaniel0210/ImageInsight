@@ -3,24 +3,43 @@ using ImageInsight.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Net;
+using System.Net.Sockets;
 
 namespace ImageInsight
 {
     public partial class HomePage : Page
     {
         private readonly User _currentUser;
-        private Process? _backendProcess;
+        private int _backendPort = 8000;
+        private const string BackendHost = "127.0.0.1";
 
         public HomePage(User currentUser)
         {
             InitializeComponent();
             _currentUser = currentUser;
 
-            Loaded += async (_, _) => await LoadUserInfoAsync();
+            Loaded += async (_, _) =>
+            {
+                RestoreLogs();
+                await LoadUserInfoAsync();
+            };
+        }
+        private void RestoreLogs()
+        {
+            LogTextBox.Clear();
+
+            foreach (string log in AppRuntime.Logs)
+            {
+                LogTextBox.AppendText(log + Environment.NewLine);
+            }
+
+            LogTextBox.ScrollToEnd();
         }
 
         private async Task LoadUserInfoAsync()
@@ -45,36 +64,65 @@ namespace ImageInsight
         {
             try
             {
-                if (_backendProcess != null && !_backendProcess.HasExited)
+                if (AppRuntime.IsBackendRunning)
                 {
                     AddLog("AI service is already running.");
                     return;
                 }
 
+                string? projectRoot = FindProjectRoot();
+
+                if (projectRoot == null)
+                {
+                    AddLog("AI service start error: backend/main.py was not found.");
+                    AddLog("Make sure the backend folder exists in the project root.");
+                    return;
+                }
+
+                string pythonExe = Path.Combine(projectRoot, ".venv", "Scripts", "python.exe");
+
+                if (!File.Exists(pythonExe))
+                {
+                    AddLog($"AI service start error: Python venv not found.");
+                    AddLog($"Expected path: {pythonExe}");
+                    AddLog("Run this in the project root:");
+                    AddLog("python -m venv .venv");
+                    AddLog(".venv\\Scripts\\pip install -r requirements.txt");
+                    return;
+                }
+
+                _backendPort = FindAvailablePort(8000, 20);
+
+                AddLog($"Selected backend port: {_backendPort}");
+
                 var startInfo = new ProcessStartInfo
                 {
-                    FileName = "cmd.exe",
-                    Arguments = "/c .venv\\Scripts\\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000",
-                    WorkingDirectory = @"C:\Users\Samyb\Desktop\Stuff\Saját\Python projektek\ImageInsight",
+                    FileName = pythonExe,
+                    Arguments = $"-m uvicorn backend.main:app --host {BackendHost} --port {_backendPort}",
+                    WorkingDirectory = projectRoot,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
-                    RedirectStandardError = true
+                    RedirectStandardError = true,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8
                 };
 
-                _backendProcess = new Process
+                AppRuntime.BackendProcess = new Process
                 {
                     StartInfo = startInfo,
                     EnableRaisingEvents = true
                 };
 
-                _backendProcess.OutputDataReceived += (_, args) =>
+                AppRuntime.BackendProcess.OutputDataReceived += (_, args) =>
                 {
                     if (!string.IsNullOrWhiteSpace(args.Data))
+                    {
                         Dispatcher.Invoke(() => AddLog(args.Data));
+                    }
                 };
 
-                _backendProcess.ErrorDataReceived += (_, args) =>
+                AppRuntime.BackendProcess.ErrorDataReceived += (_, args) =>
                 {
                     if (string.IsNullOrWhiteSpace(args.Data))
                         return;
@@ -84,7 +132,8 @@ namespace ImageInsight
                         if (args.Data.Contains("Traceback") ||
                             args.Data.Contains("Exception") ||
                             args.Data.Contains("Error") ||
-                            args.Data.Contains("ERROR"))
+                            args.Data.Contains("ERROR") ||
+                            args.Data.Contains("ModuleNotFoundError"))
                         {
                             AddLog("ERROR: " + args.Data);
                         }
@@ -95,16 +144,22 @@ namespace ImageInsight
                     });
                 };
 
-                _backendProcess.Exited += (_, _) =>
+                AppRuntime.BackendProcess.Exited += (_, _) =>
                 {
-                    Dispatcher.Invoke(() => AddLog("AI service stopped."));
+                    Dispatcher.Invoke(() =>
+                    {
+                        AddLog("AI service stopped.");
+                        AppRuntime.BackendProcess?.Dispose();
+                        AppRuntime.BackendProcess = null;
+                    });
                 };
 
-                _backendProcess.Start();
-                _backendProcess.BeginOutputReadLine();
-                _backendProcess.BeginErrorReadLine();
+                AppRuntime.BackendProcess.Start();
+                AppRuntime.BackendProcess.BeginOutputReadLine();
+                AppRuntime.BackendProcess.BeginErrorReadLine();
 
                 AddLog("AI service starting...");
+                AddLog($"Project root: {projectRoot}");
             }
             catch (Exception ex)
             {
@@ -116,7 +171,7 @@ namespace ImageInsight
         {
             try
             {
-                if (_backendProcess == null || _backendProcess.HasExited)
+                if (AppRuntime.BackendProcess == null || AppRuntime.BackendProcess.HasExited)
                 {
                     AddLog("AI service is not running.");
                     return;
@@ -124,8 +179,8 @@ namespace ImageInsight
 
                 AddLog("Stopping AI service...");
 
-                var processToStop = _backendProcess;
-                _backendProcess = null;
+                var processToStop = AppRuntime.BackendProcess;
+                AppRuntime.BackendProcess = null;
 
                 await Task.Run(() =>
                 {
@@ -139,7 +194,7 @@ namespace ImageInsight
                     }
                     catch
                     {
-                        // ignored here, UI logs below if needed
+                        // ignored
                     }
                     finally
                     {
@@ -157,7 +212,7 @@ namespace ImageInsight
 
         private async void EditProfile_Click(object sender, RoutedEventArgs e)
         {
-            var window = new UserEditWindow(_currentUser.Id);
+            var window = new UserEditWindow(_currentUser.Id, _currentUser);
             bool? result = window.ShowDialog();
 
             if (result == true)
@@ -177,10 +232,63 @@ namespace ImageInsight
             }
         }
 
+        private string? FindProjectRoot()
+        {
+            string dir = AppContext.BaseDirectory;
+
+            for (int i = 0; i < 10; i++)
+            {
+                string backendMain = Path.Combine(dir, "backend", "main.py");
+
+                if (File.Exists(backendMain))
+                {
+                    return dir;
+                }
+
+                DirectoryInfo? parent = Directory.GetParent(dir);
+
+                if (parent == null)
+                    break;
+
+                dir = parent.FullName;
+            }
+
+            return null;
+        }
+
         private void AddLog(string message)
         {
-            LogTextBox.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
+            string line = $"[{DateTime.Now:HH:mm:ss}] {message}";
+
+            AppRuntime.Logs.Add(line);
+
+            LogTextBox.AppendText(line + Environment.NewLine);
             LogTextBox.ScrollToEnd();
+        }
+
+        private int FindAvailablePort(int startPort = 8000, int maxAttempts = 20)
+        {
+            for (int port = startPort; port < startPort + maxAttempts; port++)
+            {
+                if (IsPortAvailable(port))
+                    return port;
+            }
+
+            throw new Exception($"No available port found between {startPort} and {startPort + maxAttempts - 1}.");
+        }
+
+        private bool IsPortAvailable(int port)
+        {
+            try
+            {
+                using var listener = new TcpListener(IPAddress.Parse(BackendHost), port);
+                listener.Start();
+                return true;
+            }
+            catch (SocketException)
+            {
+                return false;
+            }
         }
     }
 }

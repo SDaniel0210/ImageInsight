@@ -10,11 +10,16 @@ namespace ImageInsight
     public partial class UserEditWindow : Window
     {
         private readonly int? _userId;
+        private readonly User _currentUser;
 
-        public UserEditWindow(int? userId)
+        private bool IsAdmin => _currentUser.Role == "Admin";
+
+        public UserEditWindow(int? userId, User currentUser)
         {
             InitializeComponent();
+
             _userId = userId;
+            _currentUser = currentUser;
 
             if (_userId.HasValue)
             {
@@ -24,7 +29,17 @@ namespace ImageInsight
             else
             {
                 Title = "Add user";
-                RoleComboBox.SelectedIndex = 1;
+                RoleComboBox.SelectedIndex = 1; // User
+            }
+
+            ApplyPermissions();
+        }
+
+        private void ApplyPermissions()
+        {
+            if (!IsAdmin)
+            {
+                RoleComboBox.IsEnabled = false;
             }
         }
 

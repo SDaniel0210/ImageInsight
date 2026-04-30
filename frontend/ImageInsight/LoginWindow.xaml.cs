@@ -77,5 +77,13 @@ namespace ImageInsight
                 Application.Current.Shutdown();
             }
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Login_Click(sender, e);
+            }
+        }
     }
 }
