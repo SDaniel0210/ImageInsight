@@ -60,6 +60,11 @@ namespace ImageInsight
         {
             MainFrame.Navigate(new HomePage(_currentUser));
         }
+        private void Validate_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized;
+            MainFrame.Navigate(new ValidationPage(_currentUser));
+        }
 
         private void Images_Click(object sender, RoutedEventArgs e)
         {

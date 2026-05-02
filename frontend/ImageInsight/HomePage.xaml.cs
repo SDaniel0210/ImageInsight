@@ -32,9 +32,9 @@ namespace ImageInsight
 
                 var settings = AppSettingsService.Load();
 
-                if (settings.AutoStartAiService && !AppRuntime.AutoStartServiceAttempted)
+                if (settings.AutoStartAiService && !AppRuntime.AutoStartAttempted)
                 {
-                    AppRuntime.AutoStartServiceAttempted = true;
+                    AppRuntime.AutoStartAttempted = true;
                     StartService_Click(this, new RoutedEventArgs());
                 }
             };
@@ -107,6 +107,7 @@ namespace ImageInsight
                     : 8000;
 
                 _backendPort = FindAvailablePort(startPort, 20);
+                AppRuntime.CurrentBackendPort = _backendPort;
 
                 AddLog($"Selected backend port: {_backendPort}");
 

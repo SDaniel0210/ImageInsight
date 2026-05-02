@@ -46,6 +46,15 @@
                         Padding="10,1,10,1"
                         Margin="0,0,1,0"/>
 
+                <Button x:Name="ValidateButton"
+                    Content="Validation"
+                    Click="Validate_Click"
+                    Background="#00DDDDDD"
+                    Foreground="White"
+                    BorderBrush="#00707070"
+                    Padding="10,1,10,1"
+                    Margin="0,0,1,0"/>
+                
                 <Button x:Name="ImagesButton"
                         Content="Images"
                         Click="Images_Click"
