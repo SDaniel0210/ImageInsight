@@ -8,7 +8,59 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingsPage">
 
-    <Grid>
-        
+    <Grid Margin="30">
+        <StackPanel Width="420"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+
+            <TextBlock Text="Settings"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0,0,0,25"/>
+
+            <CheckBox x:Name="SaveUsernameCheckBox"
+                      Content="Save username"
+                      Margin="0,0,0,12"/>
+
+            <CheckBox x:Name="AutoValidationModeCheckBox"
+                      Content="Auto validation mode"
+                      Margin="0,0,0,12"
+                      Checked="AutoValidationModeCheckBox_Changed"
+                      Unchecked="AutoValidationModeCheckBox_Changed"/>
+
+            <CheckBox x:Name="AutoStartAiServiceCheckBox"
+                      Content="Auto start AI service"
+                      Margin="0,0,0,12"/>
+
+            <CheckBox x:Name="SaveAnalyzedImagesAutomaticallyCheckBox"
+                      Content="Save analyzed images automatically"
+                      Margin="0,0,0,20"/>
+
+            <TextBlock Text="Default backend port"
+                       Margin="0,0,0,5"/>
+
+            <TextBox x:Name="DefaultBackendPortTextBox"
+                     Height="28"
+                     Width="160"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,0,25"/>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+
+                <Button Content="Save"
+                        Width="90"
+                        Height="30"
+                        Margin="0,0,10,0"
+                        Click="Save_Click"/>
+
+                <Button Content="Back"
+                        Width="90"
+                        Height="30"
+                        Click="Back_Click"/>
+
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 </Page>

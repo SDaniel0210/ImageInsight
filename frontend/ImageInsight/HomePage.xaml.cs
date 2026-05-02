@@ -1,15 +1,16 @@
 ﻿using ImageInsight.Data;
 using ImageInsight.Models;
+using ImageInsight.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Net;
-using System.Net.Sockets;
 
 namespace ImageInsight
 {
@@ -26,8 +27,16 @@ namespace ImageInsight
 
             Loaded += async (_, _) =>
             {
-                RestoreLogs();
                 await LoadUserInfoAsync();
+                RestoreLogs();
+
+                var settings = AppSettingsService.Load();
+
+                if (settings.AutoStartAiService && !AppRuntime.AutoStartServiceAttempted)
+                {
+                    AppRuntime.AutoStartServiceAttempted = true;
+                    StartService_Click(this, new RoutedEventArgs());
+                }
             };
         }
         private void RestoreLogs()
@@ -91,7 +100,13 @@ namespace ImageInsight
                     return;
                 }
 
-                _backendPort = FindAvailablePort(8000, 20);
+                var settings = AppSettingsService.Load();
+
+                int startPort = settings.DefaultBackendPort > 0
+                    ? settings.DefaultBackendPort
+                    : 8000;
+
+                _backendPort = FindAvailablePort(startPort, 20);
 
                 AddLog($"Selected backend port: {_backendPort}");
 
@@ -118,7 +133,7 @@ namespace ImageInsight
                 {
                     if (!string.IsNullOrWhiteSpace(args.Data))
                     {
-                        Dispatcher.Invoke(() => AddLog(args.Data));
+                        Dispatcher.BeginInvoke(() => AddLog(args.Data));
                     }
                 };
 
@@ -127,26 +142,29 @@ namespace ImageInsight
                     if (string.IsNullOrWhiteSpace(args.Data))
                         return;
 
-                    Dispatcher.Invoke(() =>
+                    Dispatcher.BeginInvoke(() =>
                     {
-                        if (args.Data.Contains("Traceback") ||
-                            args.Data.Contains("Exception") ||
-                            args.Data.Contains("Error") ||
-                            args.Data.Contains("ERROR") ||
-                            args.Data.Contains("ModuleNotFoundError"))
+                        string line = args.Data;
+
+                        if (line.Contains("Traceback") ||
+                            line.Contains("Exception") ||
+                            line.Contains("Error") ||
+                            line.Contains("ERROR") ||
+                            line.Contains("ModuleNotFoundError") ||
+                            line.Contains("[Errno 10048]"))
                         {
-                            AddLog("ERROR: " + args.Data);
+                            AddLog("ERROR: " + line);
                         }
                         else
                         {
-                            AddLog(args.Data);
+                            AddLog(line);
                         }
                     });
                 };
 
                 AppRuntime.BackendProcess.Exited += (_, _) =>
                 {
-                    Dispatcher.Invoke(() =>
+                    Dispatcher.BeginInvoke(() =>
                     {
                         AddLog("AI service stopped.");
                         AppRuntime.BackendProcess?.Dispose();

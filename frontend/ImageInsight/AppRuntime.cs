@@ -9,7 +9,7 @@ namespace ImageInsight
 
         public static Process? BackendProcess { get; set; }
 
-        public static int BackendPort { get; set; } = 8000;
+        public static bool AutoStartServiceAttempted { get; set; } = false;
 
         public static bool IsBackendRunning =>
             BackendProcess != null && !BackendProcess.HasExited;
