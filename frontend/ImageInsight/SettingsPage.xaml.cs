@@ -1,5 +1,6 @@
 ﻿using ImageInsight.Services;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -12,6 +13,8 @@ namespace ImageInsight
     public partial class SettingsPage : Page
     {
         private AppSettings _settings;
+        private string _SavedTheme;
+        private bool _isSaved = false;
 
         public SettingsPage()
         {
@@ -24,6 +27,9 @@ namespace ImageInsight
 
         private void LoadSettingsToUi()
         {
+            _SavedTheme = _settings.Theme;
+            ThemeComboBox.SelectedValue = _settings.Theme;
+
             SaveUsernameCheckBox.IsChecked = _settings.SaveUsername;
             AutoValidationModeCheckBox.IsChecked = _settings.AutoValidationMode;
             AutoStartAiServiceCheckBox.IsChecked = _settings.AutoStartAiService;
@@ -52,6 +58,16 @@ namespace ImageInsight
             {
                 SaveAnalyzedImagesAutomaticallyCheckBox.IsEnabled = true;
             }
+        }
+
+        private void ThemeComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            var item = ThemeComboBox.SelectedItem as ComboBoxItem;
+            if (item == null || item.Tag == null) return;
+
+            string selectedTheme = item.Tag.ToString();
+
+            (Application.Current as App)?.ApplyTheme(selectedTheme);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -85,7 +101,14 @@ namespace ImageInsight
                     SaveAnalyzedImagesAutomaticallyCheckBox.IsChecked == true;
             }
 
+            var item = ThemeComboBox.SelectedItem as ComboBoxItem;
+            if (item != null && item.Tag != null)
+            {
+                _settings.Theme = item.Tag.ToString();
+            }
+
             AppSettingsService.Save(_settings);
+            _isSaved = true;
 
             MessageBox.Show("Settings saved.");
         }
@@ -95,6 +118,14 @@ namespace ImageInsight
             if (NavigationService?.CanGoBack == true)
             {
                 NavigationService.GoBack();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (!_isSaved)
+            {
+                (Application.Current as App)?.ApplyTheme(_SavedTheme);
             }
         }
     }

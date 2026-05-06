@@ -18,6 +18,8 @@ namespace ImageInsight.Services
         public bool SaveAnalyzedImagesAutomatically { get; set; } = true;
 
         public int DefaultBackendPort { get; set; } = 8000;
+
+        public string Theme { get; set; } = "DefaultTheme";
     }
 
     public static class AppSettingsService

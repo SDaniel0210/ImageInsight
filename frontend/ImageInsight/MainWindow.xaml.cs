@@ -80,5 +80,13 @@ namespace ImageInsight
         {
             MainFrame.Navigate(new SettingsPage());
         }
+
+        private void NavigationBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

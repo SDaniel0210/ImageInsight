@@ -5,23 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       d:DesignHeight="728"
-      d:DesignWidth="1280"
-      Background="White">
-
-    <Page.Resources>
-        <Style x:Key="HelpIconStyle" TargetType="TextBlock">
-            <Setter Property="Text" Value="?"/>
-            <Setter Property="Width" Value="18"/>
-            <Setter Property="Height" Value="18"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#444"/>
-            <Setter Property="Margin" Value="5,0,10,0"/>
-            <Setter Property="Cursor" Value="Help"/>
-        </Style>
-    </Page.Resources>
+      d:DesignWidth="1280">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -30,74 +14,77 @@
         </Grid.RowDefinitions>
 
         <!-- Top input/control bar -->
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <Border Background="{DynamicResource ElevatedSurfaceBrush}" 
+            Padding="15,0">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal"
+                VerticalAlignment="Center"
+                Margin="0,0,10,0">
 
-                <TextBlock Text="Source path / URL:"
-                           VerticalAlignment="Center"
-                           FontSize="14"/>
-            </StackPanel>
+                    <TextBlock Text="Source path / URL:"
+                   VerticalAlignment="Center"
+                   FontSize="14"/>
+                </StackPanel>
 
-            <TextBox x:Name="SourcePathTextBox"
-                     Grid.Column="1"
-                     Height="30"
-                     VerticalContentAlignment="Center"
-                     Margin="0,0,10,0"/>
+                <TextBox x:Name="SourcePathTextBox"
+             Grid.Column="1"
+             Height="30"
+             VerticalContentAlignment="Center"
+             Margin="0,0,10,0"/>
 
-            <TextBlock Grid.Column="2"
-                       Style="{StaticResource HelpIconStyle}">
-                <TextBlock.ToolTip>
-                    <ToolTip>
-                        <TextBlock TextWrapping="Wrap"
-                                   Width="330"
-                                   Text="Click Load Images after entering a valid folder path or URL/path. The application will scan the source and collect supported image files into the validation list."/>
-                    </ToolTip>
-                </TextBlock.ToolTip>
-            </TextBlock>
+                <TextBlock Grid.Column="2"
+               Style="{StaticResource HelpIconStyle}">
+                    <TextBlock.ToolTip>
+                        <ToolTip>
+                            <TextBlock TextWrapping="Wrap"
+                           Width="330"
+                           Text="Click Load Images after entering a valid folder path or URL/path. The application will scan the source and collect supported image files into the validation list."/>
+                        </ToolTip>
+                    </TextBlock.ToolTip>
+    </TextBlock>
 
-            <Button x:Name="LoadImagesButton"
-                    Grid.Column="3"
-                    Content="Load Images"
-                    Width="110"
-                    Height="32"
-                    Margin="0,0,10,0"
-                    Click="LoadImages_Click"/>
+                <Button x:Name="LoadImagesButton"
+            Grid.Column="3"
+            Content="Load Images"
+            Width="110"
+            Height="32"
+            Margin="0,0,10,0"
+            Click="LoadImages_Click"/>
 
-            <Button x:Name="StartValidationButton"
-                    Grid.Column="4"
-                    Content="Start Validation"
-                    Width="130"
-                    Height="32"
-                    Margin="0,0,10,0"
-                    Click="StartValidation_Click"/>
+                <Button x:Name="StartValidationButton"
+            Grid.Column="4"
+            Content="Start Validation"
+            Width="130"
+            Height="32"
+            Margin="0,0,10,0"
+            Click="StartValidation_Click"/>
 
-            <Button x:Name="StopValidationButton"
-                    Grid.Column="5"
-                    Content="Stop Validation"
-                    Width="120"
-                    Height="32"
-                    Margin="0,0,10,0"
-                    Click="StopValidation_Click"/>
+                <Button x:Name="StopValidationButton"
+            Grid.Column="5"
+            Content="Stop Validation"
+            Width="120"
+            Height="32"
+            Margin="0,0,10,0"
+            Click="StopValidation_Click"/>
 
-            <TextBlock x:Name="StatusTextBlock"
-                       Grid.Column="6"
-                       Text="Status: Idle"
-                       VerticalAlignment="Center"
-                       FontWeight="Bold"
-                       FontSize="14"/>
-        </Grid>
+                <TextBlock x:Name="StatusTextBlock"
+               Grid.Column="6"
+               Text="Status: Idle"
+               VerticalAlignment="Center"
+               FontWeight="Bold"
+               FontSize="14"/>
+            </Grid>
+        </Border>
 
         <!-- Main content -->
         <Grid Grid.Row="1">
@@ -108,8 +95,7 @@
 
             <!-- Left info panel -->
             <Border Grid.Column="0"
-                    BorderBrush="#999"
-                    BorderThickness="1"
+                    Background="{DynamicResource ElevatedSurfaceBrush}"
                     Padding="15"
                     Margin="0,0,15,0">
 
@@ -200,13 +186,14 @@
 
                 <!-- Manual buttons -->
                 <Grid Grid.Row="0"
-      Margin="0,0,0,10">
+            Margin="5,5,5,10">
 
                     <Button x:Name="DeclineButton"
             Content="Decline"
             Width="110"
             Height="35"
             HorizontalAlignment="Left"
+            Style="{DynamicResource CloseButtonStyle}"
             Click="Decline_Click"/>
 
                     <Button x:Name="AcceptButton"
@@ -214,6 +201,7 @@
             Width="110"
             Height="35"
             HorizontalAlignment="Right"
+            Style="{DynamicResource AcceptButtonStyle}"
             Click="Accept_Click"/>
 
                 </Grid>
@@ -221,9 +209,9 @@
                 <!-- Drop / preview area -->
                 <Border x:Name="ImageDropArea"
                         Grid.Row="1"
-                        BorderBrush="#333"
+                        BorderBrush="{DynamicResource ControlBorderBrush}"
                         BorderThickness="2"
-                        Background="#FAFAFA"
+                        Background="{DynamicResource SurfaceBrush}"
                         AllowDrop="True"
                         Drop="ImageDropArea_Drop"
                         DragOver="ImageDropArea_DragOver">
@@ -238,7 +226,7 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="20"
-                                   Foreground="Gray"/>
+                                   Foreground="{DynamicResource SecondaryTextBrush}"/>
                     </Grid>
                 </Border>
 
@@ -264,7 +252,7 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                FontSize="14"
-                               Foreground="Gray"/>
+                               Foreground="{DynamicResource SecondaryTextBrush}"/>
 
                     <Button x:Name="NextButton"
                             Grid.Column="2"
