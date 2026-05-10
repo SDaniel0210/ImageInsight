@@ -68,7 +68,7 @@ namespace ImageInsight
 
         private void Images_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new ImagesPage());
+            MainFrame.Navigate(new ImagesPage(_currentUser));
         }
 
         private void Users_Click(object sender, RoutedEventArgs e)

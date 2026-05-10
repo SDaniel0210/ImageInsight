@@ -1,0 +1,102 @@
+﻿<Window x:Class="ImageInsight.ImageDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Image details"
+        Width="1200"
+        Height="800"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0"
+                      VerticalScrollBarVisibility="Auto">
+
+            <StackPanel>
+
+                <TextBlock Text="Image details"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Margin="0,0,0,20"/>
+
+                <TextBlock Text="Image URL:" FontWeight="Bold"/>
+                <TextBlock x:Name="ImageUrlTextBlock"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="File name:" FontWeight="Bold"/>
+                <TextBlock x:Name="FileNameTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Source URL:" FontWeight="Bold"/>
+                <TextBlock x:Name="SourceUrlTextBlock"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Source type:" FontWeight="Bold"/>
+                <TextBlock x:Name="SourceTypeTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Florence caption:" FontWeight="Bold"/>
+                <TextBlock x:Name="CaptionTextBlock"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="RAM++ tags:" FontWeight="Bold"/>
+                <ListBox x:Name="RamTagsListBox"
+                         Height="100"
+                         Margin="0,0,0,12"/>
+
+                <TextBlock Text="LLM tags:" FontWeight="Bold"/>
+                <ListBox x:Name="LlmTagsListBox"
+                         Height="100"
+                         Margin="0,0,0,12"/>
+
+                <TextBlock Text="Final tags:" FontWeight="Bold"/>
+                <ListBox x:Name="FinalTagsListBox"
+                         Height="120"
+                         Margin="0,0,0,12"/>
+
+                <TextBlock Text="Status:" FontWeight="Bold"/>
+                <TextBlock x:Name="StatusTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Is validated:" FontWeight="Bold"/>
+                <TextBlock x:Name="IsValidatedTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Validation mode:" FontWeight="Bold"/>
+                <TextBlock x:Name="ValidationModeTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Validation date:" FontWeight="Bold"/>
+                <TextBlock x:Name="ValidationDateTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Validated by:" FontWeight="Bold"/>
+                <TextBlock x:Name="ValidatedByTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Database created at:" FontWeight="Bold"/>
+                <TextBlock x:Name="DbCreatedAtTextBlock"
+                           Margin="0,0,0,12"/>
+
+                <TextBlock Text="Windows file created date:" FontWeight="Bold"/>
+                <TextBlock x:Name="FileCreatedDateTextBlock"
+                           Margin="0,0,0,12"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button Grid.Row="1"
+                Content="Close"
+                Width="100"
+                Height="35"
+                HorizontalAlignment="Right"
+                Margin="0,15,0,0"
+                Click="Close_Click"/>
+    </Grid>
+</Window>
