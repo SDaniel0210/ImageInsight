@@ -62,7 +62,6 @@ namespace ImageInsight
         }
         private void Validate_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Maximized;
             MainFrame.Navigate(new ValidationPage(_currentUser));
         }
 

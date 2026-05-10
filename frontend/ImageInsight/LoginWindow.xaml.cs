@@ -60,12 +60,12 @@ namespace ImageInsight
 
                 var user = db.Users.FirstOrDefault(u => u.Username == username);
 
-                //if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-                //{
-                //    MessageBox.Show("Invalid username or password.");
-                //    PasswordBox.Clear();
-                //    return;
-                //}
+                if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+                {
+                    MessageBox.Show("Invalid username or password.");
+                    PasswordBox.Clear();
+                    return;
+                }
 
                 user.LastLogin = DateTime.Now;
                 db.SaveChanges();
