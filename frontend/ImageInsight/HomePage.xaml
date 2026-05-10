@@ -28,19 +28,21 @@
                            Margin="0,0,10,0"/>
 
                 <Button Content="✎"
-                        Width="35"
-                        Height="35"
+                        Style="{StaticResource RoundEditButtonStyle}"
                         Click="EditProfile_Click"/>
             </StackPanel>
         </Grid>
 
         <GroupBox Header="System log"
                   Grid.Row="1"
+                  Style="{DynamicResource LogGroupBoxStyle}"
                   Margin="0,20,0,0">
             <TextBox x:Name="LogTextBox"
                      IsReadOnly="True"
+                     Cursor="Arrow"
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
+                     Style="{DynamicResource LogTextBoxStyle}"
                      VerticalScrollBarVisibility="Auto"/>
         </GroupBox>
     </Grid>

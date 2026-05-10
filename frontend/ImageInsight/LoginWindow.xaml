@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:ImageInsight"
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800"
+        Background="{DynamicResource SurfaceBrush}"
         KeyDown="Window_KeyDown">
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
 
             <TextBox x:Name="UsernameTextBox"
                  Margin="0,0,0,10"
-                 Height="30"
+                     Style="{DynamicResource BaseInputStyle}"
                  />
 
             <PasswordBox x:Name="PasswordBox"
-                     Margin="0,0,0,10"
-                     Height="30"/>
+                     Margin="0,0,0,10"/>
 
             <Button Content="Login"
                 Height="30"

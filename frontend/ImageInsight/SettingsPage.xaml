@@ -6,59 +6,58 @@
       xmlns:local="clr-namespace:ImageInsight"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Unloaded="Page_Unloaded"
       Title="SettingsPage">
 
-    <Grid Margin="30">
-        <StackPanel Width="420"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
+    <Grid Margin="40">
+        <StackPanel Width="450" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Settings" 
+                   Foreground="{DynamicResource AccentBrush}"
+                   FontSize="28" FontWeight="Bold" Margin="0,0,0,25"/>
 
-            <TextBlock Text="Settings"
-                       FontSize="24"
-                       FontWeight="Bold"
-                       Margin="0,0,0,25"/>
+            <TextBlock Text="Appearance" FontSize="18" FontWeight="SemiBold" 
+                   Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,15"/>
 
-            <CheckBox x:Name="SaveUsernameCheckBox"
-                      Content="Save username"
-                      Margin="0,0,0,12"/>
+            <Border Background="{DynamicResource ElevatedSurfaceBrush}" Padding="15" CornerRadius="10" Margin="0,0,0,15">
+                <StackPanel>
+                    <TextBlock Text="Application Theme" Margin="0,0,0,8" FontSize="13" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                    <ComboBox x:Name="ThemeComboBox" Height="35" DropDownClosed="ThemeComboBox_DropDownClosed" SelectedValuePath="Tag">
+                        <ComboBoxItem Content="Default (Dark)" Tag="DefaultTheme" IsSelected="True"/>
+                        <ComboBoxItem Content="Light" Tag="LightTheme"/>
+                        <ComboBoxItem Content="Colorful" Tag="ColorfulTheme"/>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
 
-            <CheckBox x:Name="AutoValidationModeCheckBox"
-                      Content="Auto validation mode"
-                      Margin="0,0,0,12"
-                      Checked="AutoValidationModeCheckBox_Changed"
-                      Unchecked="AutoValidationModeCheckBox_Changed"/>
+            <TextBlock Text="Automation" FontSize="18" FontWeight="SemiBold" 
+                   Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,15"/>
 
-            <CheckBox x:Name="AutoStartAiServiceCheckBox"
-                      Content="Auto start AI service"
-                      Margin="0,0,0,12"/>
+            <Border Background="{DynamicResource ElevatedSurfaceBrush}" Padding="15" CornerRadius="10" Margin="0,0,0,15">
+                <StackPanel>
+                    <CheckBox x:Name="SaveUsernameCheckBox" Content="Save username" Margin="0,5"/>
+                    <CheckBox x:Name="AutoValidationModeCheckBox" Content="Auto validation mode" Margin="0,5"
+                          Checked="AutoValidationModeCheckBox_Changed" Unchecked="AutoValidationModeCheckBox_Changed"/>
+                    <CheckBox x:Name="AutoStartAiServiceCheckBox" Content="Auto start AI service" Margin="0,5"/>
+                    <CheckBox x:Name="SaveAnalyzedImagesAutomaticallyCheckBox" Content="Save analyzed images automatically" Margin="0,5"/>
+                </StackPanel>
+            </Border>
 
-            <CheckBox x:Name="SaveAnalyzedImagesAutomaticallyCheckBox"
-                      Content="Save analyzed images automatically"
-                      Margin="0,0,0,20"/>
+            <TextBlock Text="Network" FontSize="18" FontWeight="SemiBold" 
+                   Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,15"/>
 
-            <TextBlock Text="Default backend port"
-                       Margin="0,0,0,5"/>
+            <Border Background="{DynamicResource ElevatedSurfaceBrush}" Padding="15" CornerRadius="10" Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="Default backend port" Margin="0,0,0,8" FontSize="13" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                    <TextBox x:Name="DefaultBackendPortTextBox"
+                         Width="120" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Border>
 
-            <TextBox x:Name="DefaultBackendPortTextBox"
-                     Height="28"
-                     Width="160"
-                     HorizontalAlignment="Left"
-                     Margin="0,0,0,25"/>
-
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Left">
-
-                <Button Content="Save"
-                        Width="90"
-                        Height="30"
-                        Margin="0,0,10,0"
-                        Click="Save_Click"/>
-
-                <Button Content="Back"
-                        Width="90"
-                        Height="30"
-                        Click="Back_Click"/>
-
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Save Changes" Width="140" Height="40" Margin="0,0,15,0"
+                    Style="{StaticResource {x:Type Button}}" Click="Save_Click"/>
+                <Button Content="Back" Width="100" Height="40" 
+                    Style="{StaticResource NavigationButtonStyle}" Click="Back_Click"/>
             </StackPanel>
 
         </StackPanel>

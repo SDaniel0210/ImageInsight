@@ -11,6 +11,7 @@
         MinHeight="765"
         MinWidth="1280"
         WindowStyle="None"
+        Background="{DynamicResource SurfaceBrush}"
         AllowsTransparency="False">
 
     <Grid>
@@ -20,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!-- Navigation Bar -->
-        <Grid Background="#222" Grid.Row="0">
+        <Grid Background="{DynamicResource ElevatedSurfaceBrush}" Grid.Row="0" MouseDown="NavigationBar_MouseDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -29,8 +30,12 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="ImageInsight"
-                       Foreground="White"
-                       Margin="10,10,50,10"/>
+                       FontFamily="Segoe UI"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       Margin="15,0,50,0"/>
 
             <!-- Navigation buttons -->
             <StackPanel Orientation="Horizontal"
@@ -40,47 +45,31 @@
                 <Button x:Name="HomeButton"
                         Content="Home"
                         Click="Home_Click"
-                        Background="#00DDDDDD"
-                        Foreground="White"
-                        BorderBrush="#00707070"
-                        Padding="10,1,10,1"
-                        Margin="0,0,1,0"/>
+                        Style="{DynamicResource NavigationButtonStyle}"
+                        />
 
                 <Button x:Name="ValidateButton"
-                    Content="Validation"
-                    Click="Validate_Click"
-                    Background="#00DDDDDD"
-                    Foreground="White"
-                    BorderBrush="#00707070"
-                    Padding="10,1,10,1"
-                    Margin="0,0,1,0"/>
+                        Content="Validation"
+                        Click="Validate_Click"
+                        Style="{DynamicResource NavigationButtonStyle}"/>
                 
                 <Button x:Name="ImagesButton"
                         Content="Images"
                         Click="Images_Click"
-                        Background="#00DDDDDD"
-                        Foreground="White"
-                        BorderBrush="#00707070"
-                        Padding="10,1,10,1"
-                        Margin="0,0,1,0"/>
+                        Style="{DynamicResource NavigationButtonStyle}"
+                        />
 
                 <Button x:Name="UsersButton"
                         Content="Users"
                         Click="Users_Click"
-                        Background="#00DDDDDD"
-                        Foreground="White"
-                        BorderBrush="#00707070"
-                        Padding="10,1,10,1"
-                        Margin="0,0,1,0"/>
+                        Style="{DynamicResource NavigationButtonStyle}"
+                        />
 
                 <Button x:Name="SettingsButton"
                         Content="Settings"
                         Click="Settings_Click"
-                        Background="#00DDDDDD"
-                        Foreground="White"
-                        BorderBrush="#00707070"
-                        Padding="10,1,10,1"
-                        Margin="0,0,1,0"/>
+                        Style="{DynamicResource NavigationButtonStyle}"
+                        />
             </StackPanel>
 
             <!-- Page-specific action buttons -->
@@ -121,23 +110,17 @@
 
                 <Button Content="—"
                         Width="40"
-                        Background="#00000000"
-                        Foreground="White"
-                        BorderBrush="#00707070"
+                        Style="{DynamicResource NavigationButtonStyle}"
                         Click="MinimizeWindow"/>
 
                 <Button Content="▢"
                         Width="40"
-                        Foreground="White"
-                        Background="#00DDDDDD"
-                        BorderBrush="#00707070"
+                        Style="{DynamicResource NavigationButtonStyle}"
                         Click=" ToggleMaximizeRestore"/>
 
                 <Button Content="⨉"
                         Width="40"
-                        Background="#00DDDDDD"
-                        Foreground="White"
-                        BorderBrush="#00707070"
+                        Style="{DynamicResource CloseButtonStyle}"
                         Click="CloseApp"/>
             </StackPanel>
         </Grid>
