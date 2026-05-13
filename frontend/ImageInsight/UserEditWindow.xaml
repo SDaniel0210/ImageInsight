@@ -6,6 +6,8 @@
         Width="375"
         WindowStyle="None"
         AllowsTransparency="True"
+        BorderThickness="2"
+        BorderBrush="{DynamicResource ControlBorderBrush}"
         WindowStartupLocation="CenterScreen">
 
     <Grid Background="{DynamicResource SurfaceBrush}">

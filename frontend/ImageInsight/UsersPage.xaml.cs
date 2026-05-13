@@ -57,29 +57,38 @@ namespace ImageInsight
                 return;
             }
 
-            e.Row.PreviewMouseRightButtonDown += (_, _) =>
+            e.Row.PreviewMouseRightButtonDown += (s, args) =>
             {
-                e.Row.IsSelected = true;
-                UsersDataGrid.SelectedItem = e.Row.Item;
-                e.Row.Focus();
+                var row = s as DataGridRow;
+                if (row != null)
+                {
+                    row.IsSelected = true;
+                    row.Focus();
+                }
             };
 
             var menu = new ContextMenu();
 
-            var addItem = new MenuItem { Header = "Add user" };
-            addItem.Click += AddUser_Click;
+            menu.SetResourceReference(Control.BackgroundProperty, "ElevatedSurfaceBrush");
+            menu.SetResourceReference(Control.ForegroundProperty, "PrimaryTextBrush");
+            menu.SetResourceReference(Control.BorderBrushProperty, "ControlBorderBrush");
 
-            var editItem = new MenuItem { Header = "Edit user" };
-            editItem.Click += EditUser_Click;
-
-            var deleteItem = new MenuItem { Header = "Delete user" };
-            deleteItem.Click += DeleteUser_Click;
-
-            menu.Items.Add(addItem);
-            menu.Items.Add(editItem);
-            menu.Items.Add(deleteItem);
+            menu.Items.Add(CreateStyledMenuItem("Add user", AddUser_Click));
+            menu.Items.Add(CreateStyledMenuItem("Edit user", EditUser_Click));
+            menu.Items.Add(CreateStyledMenuItem("Delete user", DeleteUser_Click));
 
             e.Row.ContextMenu = menu;
+        }
+
+        private MenuItem CreateStyledMenuItem(string header, RoutedEventHandler onClick)
+        {
+            var item = new MenuItem { Header = header };
+            item.Click += onClick;
+            item.Padding = new Thickness(10, 5, 20, 5);
+
+            item.SetResourceReference(Control.ForegroundProperty, "PrimaryTextBrush");
+
+            return item;
         }
 
         private async void AddUser_Click(object sender, RoutedEventArgs e)
