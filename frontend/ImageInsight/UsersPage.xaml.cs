@@ -95,7 +95,7 @@ namespace ImageInsight
         {
             if (!IsAdmin)
             {
-                MessageBox.Show("Access denied.");
+                CustomMessageBox.Show("Access denied.");
                 return;
             }
             var window = new UserEditWindow(_currentUser.Id, _currentUser);
@@ -111,7 +111,7 @@ namespace ImageInsight
                 return;
             if (!IsAdmin)
             {
-                MessageBox.Show("Access denied.");
+                CustomMessageBox.Show("Access denied.");
                 return;
             }
 
@@ -128,22 +128,20 @@ namespace ImageInsight
                 return;
             if (!IsAdmin)
             {
-                MessageBox.Show("Access denied.");
+                CustomMessageBox.Show("Access denied.");
                 return;
             }
             if (selectedUser.Id == _currentUser.Id)
             {
-                MessageBox.Show("You cannot delete your own user.");
+                CustomMessageBox.Show("You cannot delete your own user.");
                 return;
             }
 
-            var confirm = MessageBox.Show(
+            var confirm = CustomMessageBox.Show(
             $"Are you sure you want to delete user '{selectedUser.Username}'?",
-            "Confirm delete",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Warning);
+            "Confirm delete", true);
 
-            if (confirm != MessageBoxResult.Yes)
+            if (!confirm)
                 return;
 
             using var db = new ImageInsightDbContext();

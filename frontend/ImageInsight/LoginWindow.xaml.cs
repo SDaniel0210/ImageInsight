@@ -50,7 +50,7 @@ namespace ImageInsight
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Please enter username and password.");
+                CustomMessageBox.Show("Please enter username and password.");
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace ImageInsight
 
                 if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                 {
-                    MessageBox.Show("Invalid username or password.");
+                    CustomMessageBox.Show("Invalid username or password.");
                     PasswordBox.Clear();
                     return;
                 }
@@ -91,7 +91,7 @@ namespace ImageInsight
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Login error:\n{ex.Message}");
+                CustomMessageBox.Show($"Login error:\n{ex.Message}");
             }
         }
         protected override void OnClosed(EventArgs e)

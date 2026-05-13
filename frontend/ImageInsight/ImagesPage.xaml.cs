@@ -128,7 +128,7 @@ namespace ImageInsight
             {
                 if (string.IsNullOrWhiteSpace(selectedImage.ImageUrl))
                 {
-                    MessageBox.Show("Image URL is empty.");
+                    CustomMessageBox.Show("Image URL is empty.");
                     return;
                 }
 
@@ -140,7 +140,7 @@ namespace ImageInsight
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Could not open image:\n{ex.Message}");
+                CustomMessageBox.Show($"Could not open image:\n{ex.Message}");
             }
         }
 
@@ -153,13 +153,13 @@ namespace ImageInsight
             {
                 if (IsHttpUrl(selectedImage.ImageUrl))
                 {
-                    MessageBox.Show("This image is an URL. There is no local folder to open.");
+                    CustomMessageBox.Show("This image is an URL. There is no local folder to open.");
                     return;
                 }
 
                 if (!File.Exists(selectedImage.ImageUrl))
                 {
-                    MessageBox.Show("Local image file was not found.");
+                    CustomMessageBox.Show("Local image file was not found.");
                     return;
                 }
 
@@ -172,7 +172,7 @@ namespace ImageInsight
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Could not open image location:\n{ex.Message}");
+                CustomMessageBox.Show($"Could not open image location:\n{ex.Message}");
             }
         }
 

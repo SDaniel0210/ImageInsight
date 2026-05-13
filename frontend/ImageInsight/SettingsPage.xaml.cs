@@ -74,13 +74,13 @@ namespace ImageInsight
         {
             if (!int.TryParse(DefaultBackendPortTextBox.Text.Trim(), out int port))
             {
-                MessageBox.Show("Default backend port must be a valid number.");
+                CustomMessageBox.Show("Default backend port must be a valid number.");
                 return;
             }
 
             if (port < 1 || port > 65535)
             {
-                MessageBox.Show("Default backend port must be between 1 and 65535.");
+                CustomMessageBox.Show("Default backend port must be between 1 and 65535.");
                 return;
             }
 
@@ -110,7 +110,7 @@ namespace ImageInsight
             AppSettingsService.Save(_settings);
             _isSaved = true;
 
-            MessageBox.Show("Settings saved.");
+            CustomMessageBox.Show("Settings saved.");
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

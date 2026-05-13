@@ -333,7 +333,7 @@ namespace ImageInsight
         {
             if (_lastAnalyzeResult == null)
             {
-                MessageBox.Show("Analyze the image first.");
+                CustomMessageBox.Show("Analyze the image first.");
                 return;
             }
 
@@ -536,7 +536,7 @@ namespace ImageInsight
 
             if (files.Length > 1)
             {
-                MessageBox.Show("Bulk drag & drop is not supported here. Use the Source path / URL field instead.");
+                CustomMessageBox.Show("Bulk drag & drop is not supported here. Use the Source path / URL field instead.");
                 return;
             }
 
@@ -544,13 +544,13 @@ namespace ImageInsight
 
             if (!File.Exists(file))
             {
-                MessageBox.Show("Only single image files can be dropped here.");
+                CustomMessageBox.Show("Only single image files can be dropped here.");
                 return;
             }
 
             if (!IsSupportedImage(file))
             {
-                MessageBox.Show("Unsupported image format.");
+                CustomMessageBox.Show("Unsupported image format.");
                 return;
             }
 
@@ -607,11 +607,7 @@ namespace ImageInsight
             StatusTextBlock.Text = "Status: Error";
             LastMessageTextBlock.Text = message;
             SaveRuntimeState();
-            MessageBox.Show(
-                message,
-                "Validation error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            CustomMessageBox.Show("Validation error");
 
         }
         private void LoadValidationStatusFromDatabase()

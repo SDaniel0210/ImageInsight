@@ -51,7 +51,7 @@ namespace ImageInsight
 
             if (user == null)
             {
-                MessageBox.Show("User not found.");
+                CustomMessageBox.Show("User not found.");
                 DialogResult = false;
                 Close();
                 return;
@@ -77,13 +77,13 @@ namespace ImageInsight
 
             if (string.IsNullOrWhiteSpace(username))
             {
-                MessageBox.Show("Username cannot be empty.");
+                CustomMessageBox.Show("Username cannot be empty.");
                 return;
             }
 
             if (!_userId.HasValue && string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Password is required when creating a new user.");
+                CustomMessageBox.Show("Password is required when creating a new user.");
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace ImageInsight
 
             if (usernameExists)
             {
-                MessageBox.Show("This username already exists.");
+                CustomMessageBox.Show("This username already exists.");
                 return;
             }
 
@@ -107,7 +107,7 @@ namespace ImageInsight
 
                 if (user == null)
                 {
-                    MessageBox.Show("User not found.");
+                    CustomMessageBox.Show("User not found.");
                     return;
                 }
             }
