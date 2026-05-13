@@ -7,7 +7,8 @@
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   SelectionMode="Single"
-                  LoadingRow="UsersDataGrid_LoadingRow">
+                  LoadingRow="UsersDataGrid_LoadingRow"
+                  PreviewMouseRightButtonDown="UsersDataGrid_PreviewMouseRightButtonDown">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>

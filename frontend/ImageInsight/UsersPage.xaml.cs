@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ImageInsight
 {
@@ -24,6 +26,18 @@ namespace ImageInsight
             {
                 UsersDataGrid.IsReadOnly = true;
                 UsersDataGrid.ContextMenu = null;
+            }
+            else
+            {
+                var gridMenu = new ContextMenu();
+
+                gridMenu.SetResourceReference(Control.BackgroundProperty, "ElevatedSurfaceBrush");
+                gridMenu.SetResourceReference(Control.ForegroundProperty, "PrimaryTextBrush");
+                gridMenu.SetResourceReference(Control.BorderBrushProperty, "ControlBorderBrush");
+
+                gridMenu.Items.Add(CreateStyledMenuItem("Add user", AddUser_Click));
+
+                UsersDataGrid.ContextMenu = gridMenu;
             }
 
             Loaded += async (_, _) => await LoadUsersAsync();
@@ -57,27 +71,46 @@ namespace ImageInsight
                 return;
             }
 
-            e.Row.PreviewMouseRightButtonDown += (s, args) =>
-            {
-                var row = s as DataGridRow;
-                if (row != null)
-                {
-                    row.IsSelected = true;
-                    row.Focus();
-                }
-            };
-
             var menu = new ContextMenu();
 
             menu.SetResourceReference(Control.BackgroundProperty, "ElevatedSurfaceBrush");
             menu.SetResourceReference(Control.ForegroundProperty, "PrimaryTextBrush");
             menu.SetResourceReference(Control.BorderBrushProperty, "ControlBorderBrush");
 
-            menu.Items.Add(CreateStyledMenuItem("Add user", AddUser_Click));
             menu.Items.Add(CreateStyledMenuItem("Edit user", EditUser_Click));
             menu.Items.Add(CreateStyledMenuItem("Delete user", DeleteUser_Click));
 
             e.Row.ContextMenu = menu;
+        }
+
+        private void UsersDataGrid_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var row = FindParent<DataGridRow>(e.OriginalSource as DependencyObject);
+
+            if (row != null)
+            {
+                row.IsSelected = true;
+                UsersDataGrid.SelectedItem = row.Item;
+                row.Focus();
+            }
+            else
+            {
+                UsersDataGrid.SelectedItem = null;
+                UsersDataGrid.UnselectAll();
+            }
+        }
+
+        private static T? FindParent<T>(DependencyObject? child) where T : DependencyObject
+        {
+            while (child != null)
+            {
+                if (child is T parent)
+                    return parent;
+
+                child = VisualTreeHelper.GetParent(child);
+            }
+
+            return null;
         }
 
         private MenuItem CreateStyledMenuItem(string header, RoutedEventHandler onClick)
@@ -98,7 +131,8 @@ namespace ImageInsight
                 CustomMessageBox.Show("Access denied.");
                 return;
             }
-            var window = new UserEditWindow(_currentUser.Id, _currentUser);
+
+            var window = new UserEditWindow(null, _currentUser);
             bool? result = window.ShowDialog();
 
             if (result == true)
@@ -109,13 +143,14 @@ namespace ImageInsight
         {
             if (UsersDataGrid.SelectedItem is not UserDisplayModel selectedUser)
                 return;
+
             if (!IsAdmin)
             {
                 CustomMessageBox.Show("Access denied.");
                 return;
             }
 
-            var window = new UserEditWindow(_currentUser.Id, _currentUser);
+            var window = new UserEditWindow(selectedUser.Id, _currentUser);
             bool? result = window.ShowDialog();
 
             if (result == true)
