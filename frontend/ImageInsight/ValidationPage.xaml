@@ -8,6 +8,10 @@
       d:DesignWidth="1280">
 
     <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="597*"/>
+            <ColumnDefinition Width="28*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
             <RowDefinition Height="*"/>
@@ -15,11 +19,12 @@
 
         <!-- Top input/control bar -->
         <Border Background="{DynamicResource ElevatedSurfaceBrush}" 
-            Padding="15,0">
+            Padding="15,0" Grid.ColumnSpan="2">
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -42,7 +47,18 @@
              VerticalContentAlignment="Center"
              Margin="0,0,10,0"/>
 
-                <TextBlock Grid.Column="2"
+                <Button Grid.Column="2"
+            x:Name="BrowseButton"
+            Content="📂" 
+            FontSize="16"
+            Width="40"
+            Height="32"
+            Margin="0,0,10,0"
+            ToolTip="Browse Folder"
+            Style="{StaticResource NavigationButtonStyle}"
+            Click="BrowseButton_Click"/>
+
+                <TextBlock Grid.Column="3"
                Style="{StaticResource HelpIconStyle}">
                     <TextBlock.ToolTip>
                         <ToolTip>
@@ -54,7 +70,7 @@
     </TextBlock>
 
                 <Button x:Name="LoadImagesButton"
-            Grid.Column="3"
+            Grid.Column="4"
             Content="Load Images"
             Width="110"
             Height="32"
@@ -62,7 +78,7 @@
             Click="LoadImages_Click"/>
 
                 <Button x:Name="StartValidationButton"
-            Grid.Column="4"
+            Grid.Column="5"
             Content="Start Validation"
             Width="130"
             Height="32"
@@ -70,7 +86,7 @@
             Click="StartValidation_Click"/>
 
                 <Button x:Name="StopValidationButton"
-            Grid.Column="5"
+            Grid.Column="6"
             Content="Stop Validation"
             Width="120"
             Height="32"
@@ -78,16 +94,17 @@
             Click="StopValidation_Click"/>
 
                 <TextBlock x:Name="StatusTextBlock"
-               Grid.Column="6"
-               Text="Status: Idle"
-               VerticalAlignment="Center"
-               FontWeight="Bold"
-               FontSize="14"/>
+                           Grid.Column="7"
+                Text="Status: Idle"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                FontSize="14"
+                Foreground="{DynamicResource SecondaryTextBrush}"/>
             </Grid>
         </Border>
 
         <!-- Main content -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="260"/>
                 <ColumnDefinition Width="*"/>
@@ -246,13 +263,24 @@
                             Height="40"
                             Click="Previous_Click"/>
 
-                    <TextBlock x:Name="LastMessageTextBlock"
-                               Grid.Column="1"
-                               Text="Ready."
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="14"
-                               Foreground="{DynamicResource SecondaryTextBrush}"/>
+                    <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="20,0">
+                       <TextBlock x:Name="LastMessageTextBlock"
+                           Text="Ready."
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="14"
+                           Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+                        <ProgressBar x:Name="StatusProgressBar" 
+                             IsIndeterminate="True"
+                             Height="18"
+                             MaxWidth="550"
+                                     Foreground="{DynamicResource AccentBrush}"
+                             HorizontalAlignment="Stretch"
+                             Visibility="Hidden"/>
+                    </Grid>
+
+
 
                     <Button x:Name="NextButton"
                             Grid.Column="2"

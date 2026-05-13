@@ -43,6 +43,15 @@ namespace ImageInsight
             }
         }
 
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text.Trim();
@@ -98,7 +107,7 @@ namespace ImageInsight
         {
             base.OnClosed(e);
 
-            if (Application.Current.MainWindow == null)
+            if (Application.Current.MainWindow is LoginWindow || Application.Current.MainWindow == null)
             {
                 Application.Current.Shutdown();
             }
@@ -110,6 +119,11 @@ namespace ImageInsight
             {
                 Login_Click(sender, e);
             }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

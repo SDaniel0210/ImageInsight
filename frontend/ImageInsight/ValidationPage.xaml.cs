@@ -148,6 +148,8 @@ namespace ImageInsight
             _isValidationRunning = true;
             StatusTextBlock.Text = "Status: Running";
 
+            StatusProgressBar.Visibility = Visibility.Visible;
+
             try
             {
                 if (settings.AutoValidationMode)
@@ -167,6 +169,8 @@ namespace ImageInsight
             {
                 _isValidationRunning = false;
 
+                StatusProgressBar.Visibility = Visibility.Collapsed;
+
                 if (StatusTextBlock.Text != "Status: Finished" &&
                     StatusTextBlock.Text != "Status: Error" &&
                     StatusTextBlock.Text != "Status: Stopped")
@@ -181,6 +185,7 @@ namespace ImageInsight
         private void StopValidation_Click(object sender, RoutedEventArgs e)
         {
             _isValidationRunning = false;
+            StatusProgressBar.Visibility = Visibility.Collapsed;
             StatusTextBlock.Text = "Status: Stopped";
             LastMessageTextBlock.Text = "Validation stopped.";
             SaveRuntimeState();
@@ -603,7 +608,7 @@ namespace ImageInsight
         private void ShowFatalError(string message)
         {
             _isValidationRunning = false;
-
+            StatusProgressBar.Visibility = Visibility.Collapsed;
             StatusTextBlock.Text = "Status: Error";
             LastMessageTextBlock.Text = message;
             SaveRuntimeState();
@@ -761,6 +766,20 @@ namespace ImageInsight
                 PreviewImage.Source = null;
                 DropHintTextBlock.Visibility = Visibility.Visible;
                 RefreshUi();
+            }
+        }
+
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFolderDialog
+            {
+                Title = "Select the folder containing images",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                SourcePathTextBox.Text = dialog.FolderName;
             }
         }
     }

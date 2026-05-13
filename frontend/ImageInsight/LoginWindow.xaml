@@ -5,24 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageInsight"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800"
-        Background="{DynamicResource SurfaceBrush}"
+        Title="ImageInsight - Login" Height="500" Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent"
         KeyDown="Window_KeyDown">
-    <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
 
-            <TextBox x:Name="UsernameTextBox"
-                 Margin="0,0,0,10"
-                     Style="{DynamicResource BaseInputStyle}"
-                 />
+    <Border Background="{DynamicResource SurfaceBrush}" 
+            CornerRadius="15" 
+            BorderThickness="1" 
+            BorderBrush="{DynamicResource ControlBorderBrush}"
+            Margin="20">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Opacity="0.3"/>
+        </Border.Effect>
 
-            <PasswordBox x:Name="PasswordBox"
-                     Margin="0,0,0,10"/>
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+             </Grid.RowDefinitions>
 
-            <Button Content="Login"
-                Height="30"
-                Click="Login_Click"/>
+            <StackPanel Grid.Row="0" Margin="0,0,0,30">
+                <TextBlock Text="ImageInsight" 
+                           Foreground="{DynamicResource PrimaryTextBrush}" 
+                           FontSize="28" FontWeight="Bold" 
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="Please sign in to continue" 
+                           Foreground="{DynamicResource SecondaryTextBrush}" 
+                           FontSize="14" 
+                           HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </StackPanel>
 
-        </StackPanel>
-    </Grid>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                <TextBlock Text="Username" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,0,5" FontSize="12"/>
+                <TextBox x:Name="UsernameTextBox"
+                         Style="{DynamicResource BaseInputStyle}"
+                         Height="40" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Password" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,0,5" FontSize="12"/>
+                <PasswordBox x:Name="PasswordBox"
+                             Height="40"
+                             Background="{DynamicResource ControlBackgroundBrush}"
+                             Foreground="{DynamicResource PrimaryTextBrush}"
+                             BorderBrush="{DynamicResource ControlBorderBrush}"
+                             VerticalContentAlignment="Center"
+                             Padding="10,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Button Content="LOGIN"
+                        Height="45"
+                        Click="Login_Click"
+                        Cursor="Hand"/>
+
+                <Button Content="Exit Application" 
+                        Background="Transparent" BorderThickness="0"
+                        Foreground="{DynamicResource SecondaryTextBrush}"
+                        Margin="0,15,0,0"
+                        Padding="15, 5, 15, 5"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"
+                        Click="Exit_Click"
+                        Style="{StaticResource CloseButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

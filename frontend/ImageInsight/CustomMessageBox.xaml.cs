@@ -50,5 +50,14 @@ namespace ImageInsight
             var msg = new CustomMessageBox(message, title, isQuestion);
             return msg.ShowDialog() ?? false;
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
     }
 }
